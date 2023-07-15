@@ -28,22 +28,22 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow rounded-box w-52 bg-slate-800"
             >
               <li>
-                <button className="font-medium text-lg">
+                <button className="font-medium text-lg hover:text-cyan-400">
                   <Link to="/">Home</Link>
                 </button>
               </li>
               <li>
-                <button className="font-medium text-lg">
+                <button className="font-medium text-lg hover:text-cyan-400">
                   <Link to="/books">Books</Link>
                 </button>
               </li>
               <li>
-                <button className="font-medium text-lg">
+                <button className="font-medium text-lg hover:text-cyan-400">
                   <Link to="/signup">Signup</Link>
                 </button>
               </li>
               <li>
-                <button className="font-medium text-lg">
+                <button className="font-medium text-lg hover:text-cyan-400">
                   <Link to="/login">Login</Link>
                 </button>
               </li>
@@ -54,22 +54,22 @@ export default function Navbar() {
         <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <button className="font-medium text-lg">
+              <button className="font-medium text-lg hover:text-cyan-400">
                 <Link to="/">Home</Link>
               </button>
             </li>
             <li>
-              <button className="font-medium text-lg">
+              <button className="font-medium text-lg  hover:text-cyan-400">
                 <Link to="/books">Books</Link>
               </button>
             </li>
             <li>
-              <button className="font-medium text-lg">
+              <button className="font-medium text-lg hover:text-cyan-400">
                 <Link to="/signup">Signup</Link>
               </button>
             </li>
             <li>
-              <button className="font-medium text-lg">
+              <button className="font-medium text-lg hover:text-cyan-400">
                 <Link to="/login">Login</Link>
               </button>
             </li>
