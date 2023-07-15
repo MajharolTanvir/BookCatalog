@@ -1,10 +1,10 @@
-import Navbar from "./layouts/Navbar"
+import MainLayout from "./layouts/MainLayout"
 
 function App() {
 
   return (
     <>
-      <Navbar/>
+      <MainLayout></MainLayout>
     </>
   )
 }
