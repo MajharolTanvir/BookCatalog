@@ -1,0 +1,128 @@
+[
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "genre": "Fiction",
+    "publishDate": "July 11, 1960"
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "genre": "Dystopian Fiction",
+    "publishDate": "June 8, 1949"
+  },
+  {
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "genre": "Classic Fiction",
+    "publishDate": "January 28, 1813"
+  },
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Classic Fiction",
+    "publishDate": "April 10, 1925"
+  },
+  {
+    "title": "To Kill a Kingdom",
+    "author": "Alexandra Christo",
+    "genre": "Young Adult Fantasy",
+    "publishDate": "March 6, 2018"
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "genre": "Fiction",
+    "publishDate": "July 16, 1951"
+  },
+  {
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "genre": "Fantasy",
+    "publishDate": "September 21, 1937"
+  },
+  {
+    "title": "The Da Vinci Code",
+    "author": "Dan Brown",
+    "genre": "Mystery",
+    "publishDate": "March 18, 2003"
+  },
+  {
+    "title": "Harry Potter and the Philosopher's Stone",
+    "author": "J.K. Rowling",
+    "genre": "Fantasy",
+    "publishDate": "June 26, 1997"
+  },
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "author": "J.R.R. Tolkien",
+    "genre": "Fantasy",
+    "publishDate": "July 29, 1954"
+  },
+  {
+    "title": "The Hunger Games",
+    "author": "Suzanne Collins",
+    "genre": "Young Adult Dystopian",
+    "publishDate": "September 14, 2008"
+  },
+  {
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "genre": "Dystopian Fiction",
+    "publishDate": "April 2, 1932"
+  },
+  {
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "genre": "Fiction",
+    "publishDate": "1988"
+  },
+  {
+    "title": "The Diary of a Young Girl",
+    "author": "Anne Frank",
+    "genre": "Biography",
+    "publishDate": "June 25, 1947"
+  },
+  {
+    "title": "The Kite Runner",
+    "author": "Khaled Hosseini",
+    "genre": "Historical Fiction",
+    "publishDate": "May 29, 2003"
+  },
+  {
+    "title": "The Chronicles of Narnia: The Lion, the Witch, and the Wardrobe",
+    "author": "C.S. Lewis",
+    "genre": "Fantasy",
+    "publishDate": "October 16, 1950"
+  },
+  {
+    "title": "Animal Farm",
+    "author": "George Orwell",
+    "genre": "Political Satire",
+    "publishDate": "August 17, 1945"
+  },
+  {
+    "title": "The Fault in Our Stars",
+    "author": "John Green",
+    "genre": "Young Adult Fiction",
+    "publishDate": "January 10, 2012"
+  },
+  {
+    "title": "The Girl on the Train",
+    "author": "Paula Hawkins",
+    "genre": "Mystery",
+    "publishDate": "January 13, 2015"
+  },
+  {
+    "title": "Gone Girl",
+    "author": "Gillian Flynn",
+    "genre": "Mystery",
+    "publishDate": "May 24, 2012"
+  },
+  {
+    "title": "The Handmaid's Tale",
+    "author": "Margaret Atwood",
+    "genre": "Dystopian Fiction",
+    "publishDate": "1985"
+  }
+]
