@@ -1,6 +1,29 @@
+import { Link } from "react-router-dom";
+import { IBook } from "../Types/GlobalTypes";
 
-export default function BookCard() {
-  return (
-    <div>BookCard</div>
-  )
+interface BookProps {
+  book: IBook;
 }
+
+export default function BookCard({ book }: BookProps) {
+  const { id, title, author, genre, publicationDate } = book;
+  
+  return (
+    <div className="card w-full md:w-96 bg-base-100 shadow-xl">
+      <div className="card-body">
+        <h2 className="card-title">{title}</h2>
+        <p>{author}</p>
+        <p>{genre}</p>
+        <p>{publicationDate}</p>
+        <div className="card-actions pt-5">
+          <Link to={`/book-details/:${id}`}>
+            <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full ">
+              View details
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );}
+
+
