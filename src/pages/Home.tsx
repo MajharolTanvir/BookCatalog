@@ -13,8 +13,6 @@ export default function Home() {
       .then((data) => setBooks(data));
   }, []);
 
-  console.log(books);
-
   return (
     <section>
       <Slider></Slider>

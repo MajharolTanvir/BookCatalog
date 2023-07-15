@@ -2,14 +2,14 @@
 // import BookCard from "./BookCard";
 
 
-// export default function BookDetails() {
+export default function BookDetails() {
 //     const { id } = useParams()
 
 //     const {id, title, author, genre, publicationDate} = book
 
-//   return (
-//     <div>
-//       <div className="card card-side bg-base-100 shadow-xl">
+  return (
+    <div>
+{/* //       <div className="card card-side bg-base-100 shadow-xl">
 //         <div className="card w-full md:w-96 bg-base-100 shadow-xl">
 //           <div className="card-body">
 //             <h2 className="card-title">{title}</h2>
@@ -32,7 +32,7 @@
 //             <button className="btn btn-primary">Watch</button>
 //           </div>
 //         </div>
-//       </div>
-//     </div>
-//   );
-// }
+//       </div> */}
+    </div>
+  );
+}
