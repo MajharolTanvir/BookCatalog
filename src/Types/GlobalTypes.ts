@@ -1,9 +1,8 @@
-
-
 export interface IBook {
-    id: string,
-    title: string,
-    author: string,
-    genre: string,
-    publicationDate: string
+  id: string;
+  title: string;
+  author: string;
+  genre: string;
+  publicationDate: string;
+  addedBy: string;
 }

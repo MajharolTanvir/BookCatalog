@@ -47,9 +47,10 @@ export default function Signup() {
     void userSignup(option);
 
     // Reset the form (optional)
-    // setName("");
-    // setEmail("");
-    // setPassword("");
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
   };
 
   return (

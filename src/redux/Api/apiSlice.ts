@@ -5,6 +5,6 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://book-catalog-server.onrender.com/api/v1/",
   }),
-  tagTypes: ["signup"],
+//   tagTypes: ["signup"],
   endpoints: () => ({}),
 });
