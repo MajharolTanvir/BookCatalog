@@ -5,17 +5,13 @@ import Slider from "../components/Slider";
 import BookCard from "../components/BookCard";
 import { IBook } from "../Types/GlobalTypes";
 import { useGetAllBooksQuery } from "../redux/features/bookSlice.ts/BookApi";
-
-export interface IBooksData {
-  statusCode: 200;
-  success: true;
-  message: "Books retrieved successfully!";
-  data: IBook[];
-}
+import Loading from "../components/Loading";
 
 export default function Home() {
-  const { data }: { data?: IBooksData } = useGetAllBooksQuery(undefined);
-  console.log(data);
+  const { data, isLoading } = useGetAllBooksQuery(undefined);
+  if (isLoading) {
+  return <Loading/>
+}
 
   return (
     <section>
