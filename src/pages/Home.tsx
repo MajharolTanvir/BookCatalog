@@ -9,6 +9,7 @@ import Loading from "../components/Loading";
 
 export default function Home() {
   const { data, isLoading } = useGetAllBooksQuery(undefined);
+  
   if (isLoading) {
   return <Loading/>
 }

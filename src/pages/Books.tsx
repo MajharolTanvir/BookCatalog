@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react"
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import BookCard from "../components/BookCard";
+import Loading from "../components/Loading";
+import { useGetAllBooksQuery } from "../redux/features/bookSlice.ts/BookApi";
+import { IBook } from "../Types/GlobalTypes";
 
 export default function Books() {
-  const [books, setBooks] = useState([])
+  const { data, isLoading } = useGetAllBooksQuery(undefined);
 
-  useEffect(() => {
-    void fetch("./data.json")
-      .then((res) => res.json())
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      .then((data) => setBooks(data));
-  }, []);
-  
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="container mx-auto">
       <div className="mt-10 flex justify-center">
@@ -33,8 +35,8 @@ export default function Books() {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-5 mx-auto">
-        {books?.map((book) => (
-          <BookCard book={book}></BookCard>
+        {data?.data?.map((book: IBook) => (
+          <BookCard book={book} key={book.id} />
         ))}
       </div>
     </div>
