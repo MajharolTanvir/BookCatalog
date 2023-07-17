@@ -1,8 +1,9 @@
 import { SetStateAction, useState } from "react";
 import { useUserSignupMutation } from "../redux/features/auth/userApi";
+import Loading from "../components/Loading";
 
 export default function Signup() {
-  const [userSignup] = useUserSignupMutation();
+  const [userSignup, {isLoading}] = useUserSignupMutation();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -33,6 +34,10 @@ export default function Signup() {
     setPassword(event.target.value);
   };
 
+    if (isLoading) {
+      return <Loading />;
+    }
+
   const handleSignup = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
@@ -43,6 +48,8 @@ export default function Signup() {
       email: email,
       password: password,
     };
+console.log(firstName,lastName,email,password,)
+
 
     void userSignup(option);
 

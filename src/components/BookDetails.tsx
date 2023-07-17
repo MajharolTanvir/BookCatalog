@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   import { Link, useParams } from "react-router-dom"
@@ -32,13 +33,18 @@
               <p>Author: {author}</p>
               <p>Genre: {genre}</p>
               <p>Publish: {publicationDate}</p>
-              {/* <div className="card-actions pt-5">
-                <Link to={`/book-details/:${id}`}>
+              <div className="card-actions pt-5">
+                <Link to={`/book-update/${id}`}>
                   <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full ">
-                    View details
+                    Edit book
                   </button>
                 </Link>
-              </div> */}
+                <Link to={`/book-delete/${id}`}>
+                  <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full ">
+                    Delete book
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="card-body">
