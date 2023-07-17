@@ -12,9 +12,18 @@ const userApi = api.injectEndpoints({
       }),
       // invalidatesTags: ["signup"],
     }),
+    userLogin: builder.mutation({
+      query: (data: ICredential) => ({
+        url: `/users/login`,
+        method: "POST",
+        body: data,
+      }),
+      // invalidatesTags: ["signup"],
+    }),
   }),
 });
 
 export const {
-  useUserSignupMutation
+  useUserSignupMutation,
+  useUserLoginMutation
 } = userApi;
