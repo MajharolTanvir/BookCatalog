@@ -11,12 +11,12 @@ export default function BookCard({ book }: BookProps) {
   return (
     <div className="card w-full md:w-96 bg-base-100 shadow-xl">
       <div className="card-body">
-        <h2 className="card-title">{title}</h2>
-        <p>{author}</p>
-        <p>{genre}</p>
-        <p>{publicationDate}</p>
+        <h2 className="card-title">Title: {title}</h2>
+        <p>Author: {author}</p>
+        <p>Genre: {genre}</p>
+        <p>Publish: {publicationDate}</p>
         <div className="card-actions pt-5">
-          <Link to={`/book-details/:${id}`}>
+          <Link to={`/book-details/${id}`}>
             <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full ">
               View details
             </button>
