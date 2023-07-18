@@ -3,18 +3,18 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/book.png'
 import { useAppDispatch, useAppSelector } from '../redux/hook';
-import { signOut } from "../redux/features/auth/userSlice";
+import { setUser } from "../redux/features/auth/userSlice";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
 
   const { user }  = useAppSelector((state) => state?.user);
 
-  console.log(user.email);
+  console.log(user);
 
   const handleLogout = () => {
       localStorage.removeItem("user");
-      dispatch(signOut({ firstName: null, lastName: null, email: null }));
+      dispatch(setUser({ firstName: null, lastName: null, email: null }));
     };
 
   return (
@@ -50,6 +50,11 @@ export default function Navbar() {
               <li>
                 <button className="font-medium text-lg hover:text-cyan-400">
                   <Link to="/books">Books</Link>
+                </button>
+              </li>
+              <li>
+                <button className="font-medium text-lg hover:text-cyan-400">
+                  <Link to="/add-new-book">Add new book</Link>
                 </button>
               </li>
               {!user.email && (
@@ -92,6 +97,11 @@ export default function Navbar() {
             <li>
               <button className="font-medium text-lg  hover:text-cyan-400">
                 <Link to="/books">Books</Link>
+              </button>
+            </li>
+            <li>
+              <button className="font-medium text-lg hover:text-cyan-400">
+                <Link to="/add-new-book">Add new book</Link>
               </button>
             </li>
             {!user.email && (

@@ -22,7 +22,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    signOut: (state, action: PayloadAction<ICredential>) => {
+    setUser: (state, action: PayloadAction<ICredential>) => {
       state.user.firstName = action.payload?.firstName;
       state.user.lastName = action.payload?.lastName;
       state.user.email = action.payload?.email;
@@ -30,6 +30,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { signOut } = userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;
