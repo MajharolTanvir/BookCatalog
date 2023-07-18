@@ -1,7 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Link } from 'react-router-dom';
 import logo from '../assets/book.png'
+import { useAppDispatch, useAppSelector } from '../redux/hook';
+import { signOut } from "../redux/features/auth/userSlice";
 
 export default function Navbar() {
+  const dispatch = useAppDispatch();
+
+  const { user }  = useAppSelector((state) => state?.user);
+
+  console.log(user.email);
+
+  const handleLogout = () => {
+      localStorage.removeItem("user");
+      dispatch(signOut({ firstName: null, lastName: null, email: null }));
+    };
+
   return (
     <div className="bg-slate-800 text-white">
       <div className="navbar container mx-auto">
@@ -37,16 +52,32 @@ export default function Navbar() {
                   <Link to="/books">Books</Link>
                 </button>
               </li>
-              <li>
-                <button className="font-medium text-lg hover:text-cyan-400">
-                  <Link to="/signup">Signup</Link>
-                </button>
-              </li>
-              <li>
-                <button className="font-medium text-lg hover:text-cyan-400">
-                  <Link to="/login">Login</Link>
-                </button>
-              </li>
+              {!user.email && (
+                <>
+                  <li>
+                    <button className="font-medium text-lg hover:text-cyan-400">
+                      <Link to="/signup">Signup</Link>
+                    </button>
+                  </li>
+                  <li>
+                    <button className="font-medium text-lg hover:text-cyan-400">
+                      <Link to="/login">Login</Link>
+                    </button>
+                  </li>
+                </>
+              )}
+              {user.email && (
+                <>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="font-medium text-lg hover:text-cyan-400"
+                    >
+                      Signup
+                    </button>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
           <img className="w-16 lg:w-36" src={logo} alt="book catalog logo" />
@@ -63,16 +94,32 @@ export default function Navbar() {
                 <Link to="/books">Books</Link>
               </button>
             </li>
-            <li>
-              <button className="font-medium text-lg hover:text-cyan-400">
-                <Link to="/signup">Signup</Link>
-              </button>
-            </li>
-            <li>
-              <button className="font-medium text-lg hover:text-cyan-400">
-                <Link to="/login">Login</Link>
-              </button>
-            </li>
+            {!user.email && (
+              <>
+                <li>
+                  <button className="font-medium text-lg hover:text-cyan-400">
+                    <Link to="/signup">Signup</Link>
+                  </button>
+                </li>
+                <li>
+                  <button className="font-medium text-lg hover:text-cyan-400">
+                    <Link to="/login">Login</Link>
+                  </button>
+                </li>
+              </>
+            )}
+            {user.email && (
+              <>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="font-medium text-lg hover:text-cyan-400"
+                  >
+                    Signup
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

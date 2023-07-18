@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "./Api/apiSlice";
-// import userReducer from "./features/auth/userSlice";
-
+import userReducer from "./features/auth/userSlice";
 
 const store = configureStore({
   reducer: {
-
+    user: userReducer,
       [api.reducerPath]: api.reducer
   },
 

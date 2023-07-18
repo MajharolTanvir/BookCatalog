@@ -1,28 +1,40 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useUserLoginMutation } from "../redux/features/auth/userApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import Swal from "sweetalert2";
+import { ILoginResponse } from "../Types/GlobalTypes";
 
-export interface ICredential {
-    email: string,
-    password: string
-}
-
-export interface ILoginResponse {
-  name: string;
-  email: string;
-}
 
 export default function Login() {
-  const [userLogin, {isLoading,isSuccess, error, data}] = useUserLoginMutation()
-  const { register, handleSubmit } = useForm<ICredential>();
+  	const [errorMessage, setErrorMessage] = useState("");
+    type CustomError = FetchBaseQueryError & {
+      data: {
+        success: boolean;
+        message: string;
+        errorMessages: [];
+      };
+    };
+  
+  
+  const [userLogin, { isLoading, isError,isSuccess, error, data }] =
+    useUserLoginMutation();
+  const { register, handleSubmit, reset } = useForm<ILoginResponse>();
 
-
-  console.log(error)
-  console.log(data)
+	useEffect(() => {
+    if (isError && error) {
+      const customError = error as CustomError;
+      if (customError.data) {
+        setErrorMessage(customError.data.message);
+      }
+    }
+  }, [error, isError]);
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -30,28 +42,52 @@ export default function Login() {
       if (availableUser) {
         localStorage.removeItem("user");
       }
-      const { name, email } = data.data;
+      const { accessToken, firstName, lastName, email } = data.data;
       localStorage.setItem(
         "user",
-        JSON.stringify({ name: name, email: email })
+        JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          accessToken: accessToken,
+        })
       );
     }
   }, [data, isSuccess]);
+
+  	  if (isSuccess) {
+        void Swal.fire({
+          title: "Successfull",
+          text: data.message,
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+
+      if (isError && error) {
+        void Swal.fire({
+          title: "Failed!",
+          text: errorMessage,
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+      }
 
 
   if (isLoading) {
     return <Loading/>
   }
 
-  const onSubmit: SubmitHandler<ICredential> = (data) => {
-    const option: ICredential = {
+  const onSubmit: SubmitHandler<ILoginResponse> = (data) => {
+    const option = {
       email: data.email,
       password: data.password,
     };
 
-    console.log(option)
     void userLogin(option);
-    // navigate(`/book-details/${id}`);
+
+    reset();
   };
 
   return (

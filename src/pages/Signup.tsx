@@ -8,22 +8,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
 import { useUserSignupMutation } from "../redux/features/auth/userApi";
 import Loading from "../components/Loading";
-
-
-export interface ICredential {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
-
-export interface ISignup {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
+import { ICredential } from "../Types/GlobalTypes";
 
 export default function Signup() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -51,7 +36,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (isSuccess && data) {
-      const { firstName, lastName, email } = data.data.createdUser as ISignup;
+      const { firstName, lastName, email } = data.data.createdUser as ICredential;
       const { accessToken } = data.data;
       localStorage.setItem(
         "user",
@@ -66,7 +51,7 @@ export default function Signup() {
   }, [data, isSuccess]);
 
   if (isSuccess) {
-    Swal.fire({
+    void Swal.fire({
       title: "Successfull",
       text: "Account Created",
       icon: "success",
@@ -76,7 +61,7 @@ export default function Signup() {
   }
 
   if (isError && error) {
-    Swal.fire({
+    void Swal.fire({
       title: "Failed!",
       text: errorMessage,
       icon: "error",

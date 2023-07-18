@@ -1,5 +1,5 @@
+import { ICredential, ILoginResponse } from "../../../Types/GlobalTypes";
 import { api } from "../../Api/apiSlice";
-import { ICredential } from "./userSlice";
 
 
 const userApi = api.injectEndpoints({
@@ -10,15 +10,13 @@ const userApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      // invalidatesTags: ["signup"],
     }),
     userLogin: builder.mutation({
-      query: (data: ICredential) => ({
+      query: (data: ILoginResponse) => ({
         url: `/users/login`,
         method: "POST",
         body: data,
       }),
-      // invalidatesTags: ["signup"],
     }),
   }),
 });
