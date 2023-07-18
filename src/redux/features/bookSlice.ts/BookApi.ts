@@ -7,11 +7,19 @@ const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllBooks: builder.query({
       query: () => `/books`,
-      providesTags: ["update-book"],
+      providesTags: ["book"],
     }),
     getSingleBook: builder.query({
       query: (id: string | undefined) => `/books/${id}`,
-      providesTags: ["update-book"],
+      providesTags: ["book"],
+    }),
+    getFilterBook: builder.query({
+      query: (id: string | undefined) => `/books/${id}`,
+      providesTags: ["book"],
+    }),
+    getSearchBook: builder.query({
+      query: (query) => `/books/?${query}`,
+      providesTags: ["book"],
     }),
     updateBook: builder.mutation({
       query: ({ id, data }) => ({
@@ -19,22 +27,24 @@ const bookApi = api.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["update-book"],
+      invalidatesTags: ["book"],
     }),
     addBook: builder.mutation({
       query: (data) => ({
-        url: `/add-new-book`,
+        url: "/books/add-new-book",
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["book"],
     }),
     deleteBook: builder.mutation({
       query: (id) => ({
         url: `/books/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["book"],
     }),
   }),
 });
 
-export const { useGetAllBooksQuery, useGetSingleBookQuery, useUpdateBookMutation, useAddBookMutation, useDeleteBookMutation } = bookApi;
+export const { useGetAllBooksQuery, useGetSingleBookQuery, useUpdateBookMutation, useAddBookMutation, useDeleteBookMutation, useGetSearchBookQuery, useGetFilterBookQuery } = bookApi;

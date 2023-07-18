@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-  import { Link, useParams } from "react-router-dom"
+  import { Link, useNavigate, useParams } from "react-router-dom"
   import {
     useDeleteBookMutation,
     useGetSingleBookQuery,
@@ -23,6 +23,7 @@ export default function BookDetails() {
   const { data, isLoading } = useGetSingleBookQuery(id);
   const [deleteBook, { isLoading: deleteLoading }] = useDeleteBookMutation();
   const { user } = useAppSelector((state) => state.user);
+  const navigate = useNavigate()
 
   if (isLoading || deleteLoading) {
     return <Loading />;
@@ -48,6 +49,7 @@ export default function BookDetails() {
       if (result.isConfirmed) {
         void deleteBook(id);
         void Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        navigate(`/books`)
       }
     });
   };
