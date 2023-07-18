@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingleBooksQuery, useUpdateBookMutation } from "../redux/features/bookSlice.ts/BookApi";
+import { useGetSingleBookQuery, useUpdateBookMutation } from "../redux/features/bookSlice.ts/BookApi";
 import Loading from "./Loading";
 
 export interface IBook {
@@ -24,7 +24,7 @@ interface IFormInput {
 
 export default function BookUpdate() {
   const { id } = useParams();
-    const { data, isLoading } = useGetSingleBooksQuery(id);
+    const { data, isLoading } = useGetSingleBookQuery(id);
     const [updateBook] = useUpdateBookMutation()
     const navigate = useNavigate()
 

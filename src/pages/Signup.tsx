@@ -9,9 +9,12 @@ import { useEffect, useState } from "react";
 import { useUserSignupMutation } from "../redux/features/auth/userApi";
 import Loading from "../components/Loading";
 import { ICredential } from "../Types/GlobalTypes";
+import { setUser } from "../redux/features/auth/userSlice";
+import { useAppDispatch } from "../redux/hook";
 
 export default function Signup() {
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useAppDispatch() 
   type CustomError = FetchBaseQueryError & {
     data: {
       success: boolean;
@@ -47,8 +50,15 @@ export default function Signup() {
           accessToken: accessToken,
         })
       );
+            dispatch(
+              setUser({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+              })
+            );
     }
-  }, [data, isSuccess]);
+  }, [data, dispatch, isSuccess]);
 
   if (isSuccess) {
     void Swal.fire({

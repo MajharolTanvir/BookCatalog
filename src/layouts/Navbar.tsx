@@ -10,8 +10,6 @@ export default function Navbar() {
 
   const { user }  = useAppSelector((state) => state?.user);
 
-  console.log(user);
-
   const handleLogout = () => {
       localStorage.removeItem("user");
       dispatch(setUser({ firstName: null, lastName: null, email: null }));
@@ -78,7 +76,7 @@ export default function Navbar() {
                       onClick={handleLogout}
                       className="font-medium text-lg hover:text-cyan-400"
                     >
-                      Signup
+                      Logout
                     </button>
                   </li>
                 </>

@@ -10,24 +10,25 @@ import Loading from "../components/Loading";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import Swal from "sweetalert2";
 import { ILoginResponse } from "../Types/GlobalTypes";
-
+import { setUser } from "../redux/features/auth/userSlice";
+import { useAppDispatch } from "../redux/hook";
 
 export default function Login() {
-  	const [errorMessage, setErrorMessage] = useState("");
-    type CustomError = FetchBaseQueryError & {
-      data: {
-        success: boolean;
-        message: string;
-        errorMessages: [];
-      };
+  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useAppDispatch();
+  type CustomError = FetchBaseQueryError & {
+    data: {
+      success: boolean;
+      message: string;
+      errorMessages: [];
     };
-  
-  
-  const [userLogin, { isLoading, isError,isSuccess, error, data }] =
+  };
+
+  const [userLogin, { isLoading, isError, isSuccess, error, data }] =
     useUserLoginMutation();
   const { register, handleSubmit, reset } = useForm<ILoginResponse>();
 
-	useEffect(() => {
+  useEffect(() => {
     if (isError && error) {
       const customError = error as CustomError;
       if (customError.data) {
@@ -52,31 +53,33 @@ export default function Login() {
           accessToken: accessToken,
         })
       );
+      dispatch(
+        setUser({ firstName: firstName, lastName: lastName, email: email })
+      );
     }
-  }, [data, isSuccess]);
+  }, [data, dispatch, isSuccess]);
 
-  	  if (isSuccess) {
-        void Swal.fire({
-          title: "Successfull",
-          text: data.message,
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-      }
+  if (isSuccess) {
+    void Swal.fire({
+      title: "Successfull",
+      text: data.message,
+      icon: "success",
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  }
 
-      if (isError && error) {
-        void Swal.fire({
-          title: "Failed!",
-          text: errorMessage,
-          icon: "error",
-          confirmButtonText: "Try Again",
-        });
-      }
-
+  if (isError && error) {
+    void Swal.fire({
+      title: "Failed!",
+      text: errorMessage,
+      icon: "error",
+      confirmButtonText: "Try Again",
+    });
+  }
 
   if (isLoading) {
-    return <Loading/>
+    return <Loading />;
   }
 
   const onSubmit: SubmitHandler<ILoginResponse> = (data) => {
