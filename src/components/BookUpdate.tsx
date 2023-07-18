@@ -68,6 +68,7 @@ export default function BookUpdate() {
           </label>
           <input
             className="input input-bordered w-full max-w-xs"
+          defaultValue={title}
             {...register("title")}
           />
           <label className="label">
@@ -76,6 +77,7 @@ export default function BookUpdate() {
 
           <input
             className="input input-bordered w-full max-w-xs"
+          defaultValue={author}
             {...register("author")}
           />
           <label className="label">
@@ -83,6 +85,7 @@ export default function BookUpdate() {
           </label>
           <input
             className="input input-bordered w-full max-w-xs"
+          defaultValue={genre}
             {...register("genre")}
           />
           <label className="label">
@@ -91,6 +94,7 @@ export default function BookUpdate() {
           <input
             className="input input-bordered w-full max-w-xs"
             type="date"
+          defaultValue={publicationDate}
             {...register("publicationDate")}
           />
           <input

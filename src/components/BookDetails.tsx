@@ -1,39 +1,40 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-  import { Link, useNavigate, useParams } from "react-router-dom"
-  import {
-    useDeleteBookMutation,
-    useGetSingleBookQuery,
-  } from "../redux/features/bookSlice.ts/BookApi";
-  import Loading from "./Loading";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  useDeleteBookMutation,
+  useGetSingleBookQuery,
+} from "../redux/features/bookSlice.ts/BookApi";
+import Loading from "./Loading";
 import Swal from "sweetalert2";
 import { useAppSelector } from "../redux/hook";
+import AddReview from "./AddReview";
+import { useGetAllReviewsQuery } from "../redux/features/ReviewApi";
+import { IBook, IReview } from "../Types/GlobalTypes";
 
-export interface IBook {
-  title: string;
-  author: string;
-  genre: string;
-  publicationDate: string;
-  addedBy: string
-}
+// export interface IBook {
+//   title: string;
+//   author: string;
+//   genre: string;
+//   publicationDate: string;
+//   addedBy: string;
+// }
 
 export default function BookDetails() {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleBookQuery(id);
   const [deleteBook, { isLoading: deleteLoading }] = useDeleteBookMutation();
+  const { data: reviews, isLoading: reviewLoadnig } = useGetAllReviewsQuery(id);
   const { user } = useAppSelector((state) => state.user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  if (isLoading || deleteLoading) {
+  if (isLoading || deleteLoading || reviewLoadnig) {
     return <Loading />;
   }
 
-
   const book: IBook = data?.data;
-
-  console.log(book);
-
   const { title, author, genre, publicationDate, addedBy } = book;
 
   const handleDeleteBook = (id: string) => {
@@ -49,42 +50,48 @@ export default function BookDetails() {
       if (result.isConfirmed) {
         void deleteBook(id);
         void Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        navigate(`/books`)
+        navigate(`/books`);
       }
     });
   };
 
   return (
-    <div className="container mx-auto md:h-screen md:flex md:justify-center md:items-center">
-      <div className="card card-side bg-base-100 shadow-xl gap-10 flex-col lg:flex-row">
-        <div className="card w-full  md:w-[400px] bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">Title: {title}</h2>
-            <p>Author: {author}</p>
-            <p>Genre: {genre}</p>
-            <p>Publish: {publicationDate}</p>
-            {user.email === addedBy && (
-              <div className="card-actions pt-5">
-                <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[40%]">
-                  <Link to={`/book-update/${id}`}>Edit book</Link>
-                </button>
+    <div>
+      <div className="container mx-auto md:flex md:justify-center md:items-center mt-5">
+        <div className="card card-side bg-base-100 shadow-xl gap-10 flex-col lg:flex-row">
+          <div className="card w-full  md:w-[400px] bg-base-100 shadow-xl">
+            <div className="card-body flex-col">
+              <h2 className="card-title">Title: {title}</h2>
+              <p>Author: {author}</p>
+              <p>Genre: {genre}</p>
+              <p>Publish: {publicationDate}</p>
+              {user.email === addedBy && (
+                <div className="card-actions pt-5">
+                  <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[40%]">
+                    <Link to={`/book-update/${id}`}>Edit book</Link>
+                  </button>
 
-                <button
-                  onClick={() => id && handleDeleteBook(id)}
-                  className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[40%]"
-                >
-                  Delete book
-                </button>
-              </div>
-            )}
+                  <button
+                    onClick={() => id && handleDeleteBook(id)}
+                    className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[40%]"
+                  >
+                    Delete book
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="card-body">
+            <AddReview />
           </div>
         </div>
-        <div className="card-body">
-          <h2 className="card-title">New movie is released!</h2>
-          <p>Click the button to watch on Jetflix app.</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Watch</button>
-          </div>
+      </div>
+      <div className="container mx-auto md:flex md:justify-center md:items-center my-5">
+        <div className="card bg-sky-300 shadow-xl gap-x-10 flex-col lg:flex-row w-full md:w-[400px] lg:w-[800px]  p-10">
+          <h6 className="text-xl font-semibold mb-2">See Reviews</h6>
+          {reviews?.data?.map((review: IReview) => (
+            <p className="font-medium" key={review.id}>{review?.reviewText}</p>
+          ))}
         </div>
       </div>
     </div>

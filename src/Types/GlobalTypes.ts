@@ -1,5 +1,4 @@
 export interface IBook {
-  id: string;
   title: string;
   author: string;
   genre: string;
@@ -19,3 +18,10 @@ export interface ILoginResponse {
   email: string;
   password: string;
 }
+
+export interface IReview {
+  id: string;
+  email: string;
+  reviewText: string;
+}
+
