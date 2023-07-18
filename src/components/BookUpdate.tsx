@@ -5,7 +5,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingleBookQuery, useUpdateBookMutation } from "../redux/features/bookSlice.ts/BookApi";
+import {
+  useGetSingleBookQuery,
+  useUpdateBookMutation,
+} from "../redux/features/bookSlice.ts/BookApi";
 import Loading from "./Loading";
 
 export interface IBook {
@@ -19,30 +22,42 @@ interface IFormInput {
   title: string;
   author: string;
   genre: string;
-  publicationData: string;
+  publicationDate: string;
 }
 
 export default function BookUpdate() {
   const { id } = useParams();
-    const { data, isLoading } = useGetSingleBookQuery(id);
-    const [updateBook] = useUpdateBookMutation()
-    const navigate = useNavigate()
+  const { data, isLoading } = useGetSingleBookQuery(id);
+  const [updateBook, { isLoading: updateLoading, isSuccess }] =
+    useUpdateBookMutation();
+  const navigate = useNavigate()
 
-  if (isLoading) {
-    return <Loading />;
-  }
-    const { register, handleSubmit } = useForm<IFormInput>();
-    const onSubmit: SubmitHandler<IFormInput> = (data, id) => {
-        const option = {
-            id: id,
-            data: data
-        }
-        void updateBook(option);
-        // navigate(`/book-details/${id}`);
+  const { register, handleSubmit } = useForm<IFormInput>();
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    const option = {
+      id: id,
+      data: {
+        title: data.title,
+        author: data.author,
+        genre: data.genre,
+        publicationData: data.publicationDate,
+      },
     };
+    void updateBook(option);
+  };
 
   const book: IBook = data?.data;
   const { title, author, genre, publicationDate } = book;
+
+
+    if (isLoading || updateLoading) {
+      return <Loading />;
+    }
+
+
+  if (isSuccess) {
+    navigate(`/book-details/${id}`)
+  }
 
   return (
     <div className="container mx-auto md:h-screen md:flex md:justify-center md:items-center">
@@ -76,7 +91,7 @@ export default function BookUpdate() {
           <input
             className="input input-bordered w-full max-w-xs"
             type="date"
-            {...register("publicationData")}
+            {...register("publicationDate")}
           />
           <input
             className="bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full py-2 rounded-md mt-5"

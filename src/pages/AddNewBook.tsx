@@ -29,7 +29,7 @@ type CustomError = FetchBaseQueryError & {
 };
 
 const [addBook, { isLoading, isError, isSuccess, error, data }] =
-    useAddBookMutation();
+    useAddBookMutation(undefined);
     
 const { register, handleSubmit, reset } = useForm<IAddBook>();
 
@@ -73,6 +73,7 @@ const onSubmit: SubmitHandler<IAddBook> = (data) => {
     publicationDate: data?.publicationDate,
     addedBy: user.email,
   };
+  console.log(option)
 
   void addBook(option);
 
@@ -86,7 +87,7 @@ const onSubmit: SubmitHandler<IAddBook> = (data) => {
         <div>
           <div>
             <h4 className="text-xl md:text-2xl font-semibold text-center my-4">
-              Login here
+              Add new book
             </h4>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>

@@ -35,8 +35,6 @@ export default function Signup() {
     }
   }, [isError, error]);
 
-  console.log(data)
-
   useEffect(() => {
     if (isSuccess && data) {
       const { firstName, lastName, email } = data.data.createdUser as ICredential;
