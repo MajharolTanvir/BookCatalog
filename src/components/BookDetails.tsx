@@ -14,14 +14,6 @@ import AddReview from "./AddReview";
 import { useGetAllReviewsQuery } from "../redux/features/ReviewApi";
 import { IBook, IReview } from "../Types/GlobalTypes";
 
-// export interface IBook {
-//   title: string;
-//   author: string;
-//   genre: string;
-//   publicationDate: string;
-//   addedBy: string;
-// }
-
 export default function BookDetails() {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleBookQuery(id);
@@ -87,7 +79,7 @@ export default function BookDetails() {
         </div>
       </div>
       <div className="container mx-auto md:flex md:justify-center md:items-center my-5">
-        <div className="card bg-sky-300 shadow-xl gap-x-10 flex-col lg:flex-row w-full md:w-[400px] lg:w-[800px]  p-10">
+        <div className="card bg-sky-300 shadow-xl gap-x-10 flex-col w-full md:w-[400px] lg:w-[800px]  p-10">
           <h6 className="text-xl font-semibold mb-2">See Reviews</h6>
           {reviews?.data?.map((review: IReview) => (
             <p className="font-medium" key={review.id}>{review?.reviewText}</p>

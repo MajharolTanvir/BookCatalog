@@ -44,18 +44,18 @@ export default function Books() {
           </div>
         </div>
       </div>
-      {searchData?.data && (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-5 mx-auto border-b-2 border-cyan-500">
+      {searchData?.data ? 
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-5 mx-auto">
           {searchData?.data?.map((book: IBook) => (
             <BookCard book={book} key={book.id} />
           ))}
-        </div>
-      )}
+        </div> : 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-5 mx-auto">
         {data?.data?.map((book: IBook) => (
           <BookCard book={book} key={book.id} />
         ))}
       </div>
+      }
     </div>
   );
 }
