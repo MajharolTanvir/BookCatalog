@@ -13,7 +13,7 @@ import { useAppSelector } from "../redux/hook";
 import AddReview from "./AddReview";
 import { useGetAllReviewsQuery } from "../redux/features/ReviewApi";
 import { IBook, IReview } from "../Types/GlobalTypes";
-import { useAddWishlistMutation } from "../redux/features/wishlist/WishlistApi";
+import { useAddWishlistMutation, useGetSingleWishlistQuery } from "../redux/features/wishlist/WishlistApi";
 import { useEffect, useState } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
@@ -30,6 +30,8 @@ export default function BookDetails() {
   const { data, isLoading } = useGetSingleBookQuery(id);
   const [deleteBook, { isLoading: deleteLoading }] = useDeleteBookMutation();
   const { data: reviews, isLoading: reviewLoading } = useGetAllReviewsQuery(id);
+  const { data: wishlist, isLoading: singleLoading } = useGetSingleWishlistQuery(id);
+
   const [
     addWishList,
     { isLoading: wishlistLoading, isError, isSuccess, error },
@@ -46,7 +48,13 @@ export default function BookDetails() {
     }
   }, [isError, error]);
 
-  if (isLoading || deleteLoading || reviewLoading || wishlistLoading) {
+  if (
+    isLoading ||
+    deleteLoading ||
+    reviewLoading ||
+    wishlistLoading ||
+    singleLoading
+  ) {
     return <Loading />;
   }
 
@@ -110,23 +118,23 @@ export default function BookDetails() {
               <p>Author: {author}</p>
               <p>Genre: {genre}</p>
               <p>Publish: {publicationDate}</p>
-              {user.email && (
-                <div className="card-actions pt-5">
+              <div className="card-actions pt-5">
+                {wishlist?.data?.email !== user.email && (
                   <button
                     onClick={handleWishlist}
                     className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[45%]"
                   >
                     WishList
                   </button>
-
-                  <button
-                    onClick={() => id && handleDeleteBook(id)}
-                    className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[40%]"
-                  >
-                    Delete book
-                  </button>
-                </div>
-              )}
+                )}
+                {wishlist?.data?.email === user.email && (
+                  <Link to={`/wishlists`}>
+                    <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full">
+                      View Wishlist
+                    </button>
+                  </Link>
+                )}
+              </div>
               {user.email === addedBy && (
                 <div className="card-actions pt-5">
                   <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[40%]">

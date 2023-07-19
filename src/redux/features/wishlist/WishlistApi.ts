@@ -8,6 +8,10 @@ const wishlistApi = api.injectEndpoints({
       query: () => `/wishlists`,
       providesTags: ["wishlist"],
     }),
+    getSingleWishlist: builder.query({
+      query: (id) => `/wishlists/${id}`,
+      providesTags: ["wishlist"],
+    }),
     addWishlist: builder.mutation({
       query: (data) => ({
         url: "/wishlists/add-wishlist",
@@ -26,4 +30,4 @@ const wishlistApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetWishlistQuery, useAddWishlistMutation, useDeleteWishlistMutation } = wishlistApi;
+export const { useGetWishlistQuery, useGetSingleWishlistQuery, useAddWishlistMutation, useDeleteWishlistMutation } = wishlistApi;
