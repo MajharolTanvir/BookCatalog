@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Link } from "react-router-dom";
 import { IBook } from "../Types/GlobalTypes";
 
@@ -7,7 +8,7 @@ interface BookProps {
 
 export default function BookCard({ book }: BookProps) {
   const { id, title, author, genre, publicationDate } = book;
-  
+
   return (
     <div className="card w-full md:w-96 bg-base-100 shadow-xl">
       <div className="card-body">
@@ -15,15 +16,14 @@ export default function BookCard({ book }: BookProps) {
         <p>Author: {author}</p>
         <p>Genre: {genre}</p>
         <p>Publish: {publicationDate}</p>
-        <div className="card-actions pt-5">
-          <Link to={`/book-details/${id}`}>
-            <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full ">
+        <div className="card-actions pt-5 flex-nowrap">
+          <Link className="w-[50%]" to={`/book-details/${id}`}>
+            <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400">
               View details
             </button>
           </Link>
         </div>
       </div>
     </div>
-  );}
-
-
+  );
+}
