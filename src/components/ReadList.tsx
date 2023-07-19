@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import { useAddReadListMutation } from "../redux/features/ReadList/ReadLitApi";
+import { Link, useParams } from "react-router-dom";
+import {
+  useAddReadListMutation,
+  useGetSingleReadListQuery,
+} from "../redux/features/ReadList/ReadLitApi";
 import Loading from "./Loading";
 import { useAppSelector } from "../redux/hook";
 import { useEffect, useState } from "react";
@@ -15,80 +20,90 @@ interface IFormInput {
 }
 
 export default function ReadList() {
-    const { id } = useParams()
-    const { user } = useAppSelector(state => state.user)
-    const [errorMessage, setErrorMessage] = useState("");
-    type CustomError = FetchBaseQueryError & {
-      data: {
-        success: boolean;
-        message: string;
-        errorMessages: [];
-      };
+  const { id } = useParams();
+  const { user } = useAppSelector((state) => state.user);
+  const [errorMessage, setErrorMessage] = useState("");
+  type CustomError = FetchBaseQueryError & {
+    data: {
+      success: boolean;
+      message: string;
+      errorMessages: [];
     };
-    const [addReadList, { isLoading, isSuccess, isError, error }] = useAddReadListMutation(undefined)
-    const { register, handleSubmit } = useForm<IFormInput>();
+  };
+  const [addReadList, { isLoading, isSuccess, isError, error }] =
+    useAddReadListMutation(undefined);
+  const { data, isLoading: singeReadLoading } = useGetSingleReadListQuery({
+    id: id,
+    email: user.email,
+  });
+  const { register, handleSubmit } = useForm<IFormInput>();
 
-      useEffect(() => {
-        if (isError && error) {
-          const customError = error as CustomError;
-          if (customError.data) {
-            setErrorMessage(customError.data.message);
-          }
-        }
-      }, [isError, error]);
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-        const option = {
-            id: id,
-            email: user.email,
-            status: data.status
-        }
-
-        void addReadList(option);
-    };
-
-    if (isSuccess) {
-      void Swal.fire({
-        title: "Successfull",
-        text: "ReadList added",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1000,
-      });
-    }
-
+  useEffect(() => {
     if (isError && error) {
-      void Swal.fire({
-        title: "Failed!",
-        text: errorMessage,
-        icon: "error",
-        confirmButtonText: "Try Again",
-      });
+      const customError = error as CustomError;
+      if (customError.data) {
+        setErrorMessage(customError.data.message);
+      }
     }
-    
-    if (isLoading) {
-        return <Loading/>
+  }, [isError, error]);
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    const option = {
+      id: id,
+      email: user.email,
+      status: data.status,
+    };
 
-    }
+    void addReadList(option);
+  };
+
+  if (isSuccess) {
+    void Swal.fire({
+      title: "Successfull",
+      text: "ReadList added",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  }
+
+  if (isError && error) {
+    void Swal.fire({
+      title: "Failed!",
+      text: errorMessage,
+      icon: "error",
+      confirmButtonText: "Try Again",
+    });
+  }
+
+  if (isLoading || singeReadLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
-      <form
-        className="flex flex-col md:flex-row gap-4"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <select
-          className="p-3 rounded-md bg-transparent active:border-cyan-600 text-slate-900 w-full md:w-[45%]"
-          {...register("status")}
+      {data?.data.email !== user.email ? (
+        <form
+          className="flex flex-col md:flex-row gap-4"
+          onSubmit={handleSubmit(onSubmit)}
         >
-          <option defaultValue={"Reading soon"}>Reading soon</option>
-          <option value="Reading">Reading</option>
-          <option value="Finished">Finished</option>
-        </select>
-        <input
-          className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full md:w-[40%]"
-          type="submit"
-        />
-      </form>
+          <select
+            className="p-3 rounded-md bg-transparent active:border-cyan-600 text-slate-900 w-full md:w-[45%]"
+            {...register("status")}
+          >
+            <option defaultValue={"Reading soon"}>Reading soon</option>
+            <option value="Reading">Reading</option>
+            <option value="Finished">Finished</option>
+          </select>
+          <input
+            className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full md:w-[40%]"
+            type="submit"
+          />
+        </form>
+      ) : (
+        <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full">
+          <Link to="/readlists">View Reading List</Link>
+        </button>
+      )}
     </div>
   );
 }

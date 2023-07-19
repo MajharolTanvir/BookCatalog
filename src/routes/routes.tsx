@@ -10,6 +10,7 @@ import BookUpdate from "../components/BookUpdate";
 import AddNewBook from "../pages/AddNewBook";
 import PrivateRoute from "./privateRoutes";
 import Wishlists from "../pages/Wishlists";
+import ReadListData from "../pages/ReadListData";
 
 
 const routes = createBrowserRouter([
@@ -28,6 +29,10 @@ const routes = createBrowserRouter([
       {
         path: "/wishlists",
         element: <Wishlists />,
+      },
+      {
+        path: "/readlists",
+        element: <ReadListData />,
       },
       {
         path: "/book-details/:id",
