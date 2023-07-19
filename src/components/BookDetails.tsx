@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -13,12 +15,18 @@ import { useAppSelector } from "../redux/hook";
 import AddReview from "./AddReview";
 import { useGetAllReviewsQuery } from "../redux/features/ReviewApi";
 import { IBook, IReview } from "../Types/GlobalTypes";
-import { useAddWishlistMutation, useGetSingleWishlistQuery } from "../redux/features/wishlist/WishlistApi";
+import {
+  useAddWishlistMutation,
+  useGetSingleWishlistQuery,
+} from "../redux/features/wishlist/WishlistApi";
 import { useEffect, useState } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import ReadList from "./ReadList";
 
 export default function BookDetails() {
+  const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
+  const { user } = useAppSelector((state) => state.user);
   type CustomError = FetchBaseQueryError & {
     data: {
       success: boolean;
@@ -26,17 +34,16 @@ export default function BookDetails() {
       errorMessages: [];
     };
   };
-  const { id } = useParams();
+  const { data: wishlist, isLoading: singleLoading } =
+    useGetSingleWishlistQuery({ id: id, email: user.email });
   const { data, isLoading } = useGetSingleBookQuery(id);
   const [deleteBook, { isLoading: deleteLoading }] = useDeleteBookMutation();
   const { data: reviews, isLoading: reviewLoading } = useGetAllReviewsQuery(id);
-  const { data: wishlist, isLoading: singleLoading } = useGetSingleWishlistQuery(id);
 
   const [
     addWishList,
     { isLoading: wishlistLoading, isError, isSuccess, error },
   ] = useAddWishlistMutation(undefined);
-  const { user } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -108,6 +115,8 @@ export default function BookDetails() {
     });
   };
 
+  console.log(wishlist);
+
   return (
     <div>
       <div className="container mx-auto md:flex lg:h-screen md:justify-center md:items-center mt-5">
@@ -149,6 +158,7 @@ export default function BookDetails() {
                   </button>
                 </div>
               )}
+              <ReadList />
             </div>
           </div>
           <div className="card-body">
