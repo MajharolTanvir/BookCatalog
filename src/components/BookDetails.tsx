@@ -110,9 +110,9 @@ export default function BookDetails() {
 
   return (
     <div>
-      <div className="container mx-auto md:flex md:justify-center md:items-center mt-5">
+      <div className="container mx-auto md:flex lg:h-screen md:justify-center md:items-center mt-5">
         <div className="card card-side bg-base-100 shadow-xl gap-10 flex-col lg:flex-row">
-          <div className="card w-full  md:w-[400px] bg-base-100 shadow-xl">
+          <div className="card w-full md:w-[400px] bg-base-100 shadow-xl">
             <div className="card-body flex-col">
               <h2 className="card-title">Title: {title}</h2>
               <p>Author: {author}</p>

@@ -5,7 +5,7 @@ import { api } from "../../Api/apiSlice";
 const wishlistApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getWishlist: builder.query({
-      query: () => `/wishlists`,
+      query: (query) => `/wishlists/?${query}`,
       providesTags: ["wishlist"],
     }),
     getSingleWishlist: builder.query({
