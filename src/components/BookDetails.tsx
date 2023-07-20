@@ -25,8 +25,9 @@ import ReadList from "./ReadList";
 
 export default function BookDetails() {
   const { id } = useParams();
-  const [errorMessage, setErrorMessage] = useState("");
   const { user } = useAppSelector((state) => state.user);
+  const [errorMessage, setErrorMessage] = useState("");
+
   type CustomError = FetchBaseQueryError & {
     data: {
       success: boolean;
@@ -34,8 +35,9 @@ export default function BookDetails() {
       errorMessages: [];
     };
   };
+
   const { data: wishlist, isLoading: singleLoading } =
-    useGetSingleWishlistQuery({ id: id, email: user.email });
+    useGetSingleWishlistQuery({ id: id, email: user?.email });
   const { data, isLoading } = useGetSingleBookQuery(id);
   const [deleteBook, { isLoading: deleteLoading }] = useDeleteBookMutation();
   const { data: reviews, isLoading: reviewLoading } = useGetAllReviewsQuery(id);
@@ -71,7 +73,7 @@ export default function BookDetails() {
   const handleWishlist = () => {
     const option = {
       id: id,
-      email: user.email,
+      email: user?.email,
       status: "Wishlist",
     };
 
@@ -114,8 +116,6 @@ export default function BookDetails() {
       }
     });
   };
-
-  console.log(wishlist);
 
   return (
     <div>

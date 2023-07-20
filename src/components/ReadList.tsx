@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
 import {
   useAddReadListMutation,
@@ -12,12 +11,6 @@ import { useAppSelector } from "../redux/hook";
 import { useEffect, useState } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import Swal from "sweetalert2";
-
-interface IFormInput {
-  id: string;
-  email: string;
-  status: string;
-}
 
 export default function ReadList() {
   const { id } = useParams();
@@ -36,7 +29,6 @@ export default function ReadList() {
     id: id,
     email: user.email,
   });
-  const { register, handleSubmit } = useForm<IFormInput>();
 
   useEffect(() => {
     if (isError && error) {
@@ -46,11 +38,10 @@ export default function ReadList() {
       }
     }
   }, [isError, error]);
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const handleReadList = () => {
     const option = {
       id: id,
       email: user.email,
-      status: data.status,
     };
 
     void addReadList(option);
@@ -79,26 +70,17 @@ export default function ReadList() {
     return <Loading />;
   }
 
+  console.log(data)
+
   return (
     <div>
-      {data?.data.email !== user.email ? (
-        <form
-          className="flex flex-col md:flex-row gap-4"
-          onSubmit={handleSubmit(onSubmit)}
+      {data?.data?.email !== user?.email ? (
+        <button
+          className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full"
+          onClick={handleReadList}
         >
-          <select
-            className="p-3 rounded-md bg-transparent active:border-cyan-600 text-slate-900 w-full md:w-[45%]"
-            {...register("status")}
-          >
-            <option defaultValue={"Reading soon"}>Reading soon</option>
-            <option value="Reading">Reading</option>
-            <option value="Finished">Finished</option>
-          </select>
-          <input
-            className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full md:w-[40%]"
-            type="submit"
-          />
-        </form>
+          Add Read List
+        </button>
       ) : (
         <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full">
           <Link to="/readlists">View Reading List</Link>

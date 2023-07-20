@@ -20,10 +20,11 @@ const readListApi = api.injectEndpoints({
       }),
       invalidatesTags: ["ReadList"],
     }),
-    deleteReadList: builder.mutation({
-      query: ({ id, email }) => ({
-        url: `/readlists/${id}/${email}`,
-        method: "DELETE",
+    updateReadList: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/readlists/${id}`,
+        method: "PATCH",
+        body: data,
       }),
       invalidatesTags: ["ReadList"],
     }),
@@ -33,6 +34,6 @@ const readListApi = api.injectEndpoints({
 export const {
   useGetReadListQuery,
   useGetSingleReadListQuery,
-  useAddReadListMutation,
-  useDeleteReadListMutation,
+    useAddReadListMutation,
+  useUpdateReadListMutation
 } = readListApi;
