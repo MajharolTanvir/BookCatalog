@@ -28,18 +28,26 @@ const routes = createBrowserRouter([
       },
       {
         path: "/wishlists",
-        element: <Wishlists />,
+        element: (
+          <PrivateRoute>
+            <Wishlists />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/readlists",
-        element: <ReadListData />,
+        element: (
+          <PrivateRoute>
+            <ReadListData />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/book-details/:id",
         element: (
-          // <PrivateRoute>
-          <BookDetails />
-          // </PrivateRoute>
+          <PrivateRoute>
+            <BookDetails />
+          </PrivateRoute>
         ),
       },
       {
