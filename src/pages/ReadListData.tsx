@@ -86,7 +86,7 @@ export default function ReadListData() {
             readSoon: boolean;
             finish: boolean;
           }) => (
-                  <div className="card w-96 bg-base-100 shadow-xl">
+                  <div className="card w-96 bg-base-100 shadow-xl my-4">
               <div className="card-body">
                 <h2 className="card-title">Title: {readList?.id?.title}</h2>
                 <p>Author: {readList?.id?.author}</p>

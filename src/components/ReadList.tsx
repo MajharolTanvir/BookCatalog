@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Link, useParams } from "react-router-dom";
+import { BiSolidBookAdd } from "react-icons/bi";
 import {
   useAddReadListMutation,
   useGetSingleReadListQuery,
@@ -11,6 +12,7 @@ import { useAppSelector } from "../redux/hook";
 import { useEffect, useState } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import Swal from "sweetalert2";
+import { BsEyeFill } from "react-icons/bs";
 
 export default function ReadList() {
   const { id } = useParams();
@@ -70,21 +72,29 @@ export default function ReadList() {
     return <Loading />;
   }
 
-  console.log(data)
+  console.log(data);
 
   return (
     <div>
       {data?.data?.email !== user?.email ? (
-        <button
-          className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full"
-          onClick={handleReadList}
-        >
-          Add Read List
-        </button>
+        <div>
+          <div className="tooltip" data-tip="Add reading book">
+            <button
+              className="btn bg-cyan-600 hover:bg-cyan-400 text-white hover:text-slate-800 text-xl"
+              onClick={handleReadList}
+            >
+              <BiSolidBookAdd />
+            </button>
+          </div>
+        </div>
       ) : (
-        <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full">
-          <Link to="/readlists">View Reading List</Link>
-        </button>
+        <Link to="/readlists">
+          <div className="tooltip" data-tip="View Read List">
+            <button className="btn bg-cyan-600 hover:bg-cyan-400 text-white hover:text-slate-800 text-xl">
+              <BsEyeFill />
+            </button>
+          </div>
+        </Link>
       )}
     </div>
   );

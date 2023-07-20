@@ -5,6 +5,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { GiSelfLove } from "react-icons/gi";
+import { BsEyeFill } from "react-icons/bs";
+import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import {
   useDeleteBookMutation,
   useGetSingleBookQuery,
@@ -119,43 +122,51 @@ export default function BookDetails() {
 
   return (
     <div>
-      <div className="container mx-auto md:flex lg:h-screen md:justify-center md:items-center mt-5">
+      <div className="container mx-auto md:flex md:justify-center md:items-center mt-5">
         <div className="card card-side bg-base-100 shadow-xl gap-10 flex-col lg:flex-row">
-          <div className="card w-full md:w-[400px] bg-base-100 shadow-xl">
-            <div className="card-body flex-col">
-              <h2 className="card-title">Title: {title}</h2>
-              <p>Author: {author}</p>
-              <p>Genre: {genre}</p>
-              <p>Publish: {publicationDate}</p>
-              <div className="card-actions pt-5">
-                {wishlist?.data?.email !== user.email && (
+          <div className="card-body">
+            <h2 className="card-title">Title: {title}</h2>
+            <p>Author: {author}</p>
+            <p>Genre: {genre}</p>
+            <p>Publish: {publicationDate}</p>
+            <div className="card-actions pt-5">
+              {wishlist?.data?.email !== user.email && (
+                <div className="tooltip" data-tip="WishList">
                   <button
                     onClick={handleWishlist}
-                    className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[45%]"
+                    className="btn bg-cyan-600 hover:bg-cyan-400 text-white hover:text-slate-800 text-xl"
                   >
-                    WishList
+                    <GiSelfLove />
                   </button>
-                )}
-                {wishlist?.data?.email === user.email && (
-                  <Link to={`/wishlists`}>
-                    <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-full">
-                      View Wishlist
+                </div>
+              )}
+              {wishlist?.data?.email === user.email && (
+                <Link to={`/wishlists`}>
+                  <div className="tooltip" data-tip="View WishList">
+                    <button className="btn bg-cyan-600 hover:bg-cyan-400 text-white hover:text-slate-800 text-xl">
+                      <BsEyeFill />
                     </button>
-                  </Link>
-                )}
-              </div>
+                  </div>
+                </Link>
+              )}
               {user.email === addedBy && (
-                <div className="card-actions pt-5">
-                  <button className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[40%]">
-                    <Link to={`/book-update/${id}`}>Edit book</Link>
-                  </button>
+                <div className="card-actions">
+                  <Link to={`/book-update/${id}`}>
+                    <div className="tooltip" data-tip="Update book">
+                      <button className="btn bg-cyan-600 hover:bg-cyan-400 text-white hover:text-slate-800 text-xl">
+                        <AiFillEdit />
+                      </button>
+                    </div>
+                  </Link>
 
-                  <button
-                    onClick={() => id && handleDeleteBook(id)}
-                    className="btn bg-cyan-600 text-white hover:text-slate-900 hover:bg-cyan-400 w-[40%]"
-                  >
-                    Delete book
-                  </button>
+                  <div className="tooltip" data-tip="Delete book">
+                    <button
+                      className="btn bg-cyan-600 hover:bg-cyan-400 text-white hover:text-slate-800 text-xl"
+                      onClick={() => id && handleDeleteBook(id)}
+                    >
+                      <AiOutlineDelete />
+                    </button>
+                  </div>
                 </div>
               )}
               <ReadList />
@@ -166,7 +177,7 @@ export default function BookDetails() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto md:flex md:justify-center md:items-center my-5">
+      <div className="container mx-auto md:flex md:justify-center my-5">
         <div className="card bg-sky-300 shadow-xl gap-x-10 flex-col w-full md:w-[400px] lg:w-[800px]  p-10">
           <h6 className="text-xl font-semibold mb-2">See Reviews</h6>
           {reviews?.data?.map((review: IReview) => (

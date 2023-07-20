@@ -12,9 +12,11 @@ import Swal from "sweetalert2";
 import { ILoginResponse } from "../Types/GlobalTypes";
 import { setUser } from "../redux/features/auth/userSlice";
 import { useAppDispatch } from "../redux/hook";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   type CustomError = FetchBaseQueryError & {
     data: {
@@ -57,7 +59,8 @@ export default function Login() {
         setUser({ firstName: firstName, lastName: lastName, email: email })
       );
     }
-  }, [data, dispatch, isSuccess]);
+    navigate("/");
+  }, [data, dispatch, isSuccess, navigate]);
 
   if (isSuccess) {
     void Swal.fire({

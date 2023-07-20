@@ -6,6 +6,7 @@ import BookCard from "../components/BookCard";
 import { IBook } from "../Types/GlobalTypes";
 import { useGetAllBooksQuery } from "../redux/features/bookSlice.ts/BookApi";
 import Loading from "../components/Loading";
+import Footer from "../layouts/Footer";
 
 export default function Home() {
   const { data, isLoading } = useGetAllBooksQuery(undefined);
@@ -27,6 +28,7 @@ export default function Home() {
             ))}
         </div>
       </div>
+      <Footer></Footer>
     </section>
   );
 }
