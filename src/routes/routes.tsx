@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home";
 import Books from "../pages/Books";
-import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
 import BookDetails from "../components/BookDetails";
@@ -11,6 +10,7 @@ import AddNewBook from "../pages/AddNewBook";
 import PrivateRoute from "./privateRoutes";
 import Wishlists from "../pages/Wishlists";
 import ReadListData from "../pages/ReadListData";
+import Login from "../pages/Login";
 
 
 const routes = createBrowserRouter([
