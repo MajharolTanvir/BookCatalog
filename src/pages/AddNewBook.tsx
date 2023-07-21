@@ -64,7 +64,6 @@ export default function AddNewBook() {
     });
   }
 
-  console.log(error)
 
     const onSubmit: SubmitHandler<IAddBook> = (data) => {
       const option: IAddBook = {

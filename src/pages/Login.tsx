@@ -59,7 +59,7 @@ export default function Login() {
         setUser({ firstName: firstName, lastName: lastName, email: email })
       );
     }
-  }, [data, dispatch, isSuccess, navigate]);
+  }, [data, dispatch, isSuccess]);
 
   if (isSuccess) {
     void Swal.fire({
@@ -69,6 +69,7 @@ export default function Login() {
       showConfirmButton: false,
       timer: 1000,
     });
+          navigate("/");
   }
 
   if (isError && error) {

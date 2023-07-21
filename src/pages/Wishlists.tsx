@@ -29,7 +29,6 @@ export default function Wishlists() {
       id: id,
       email: user.email,
     };
-    console.log(option);
     void deleteWishlist(option);
   };
 

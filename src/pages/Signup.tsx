@@ -39,7 +39,8 @@ export default function Signup() {
 
   useEffect(() => {
     if (isSuccess && data) {
-      const { firstName, lastName, email } = data.data.createdUser as ICredential;
+      const { firstName, lastName, email } = data.data
+        .createdUser as ICredential;
       const { accessToken } = data.data;
       localStorage.setItem(
         "user",
@@ -50,14 +51,13 @@ export default function Signup() {
           accessToken: accessToken,
         })
       );
-            dispatch(
-              setUser({
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-              })
-            );
-      navigate('/');
+      dispatch(
+        setUser({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+        })
+      );
     }
   }, [data, dispatch, isSuccess, navigate]);
 
@@ -69,6 +69,7 @@ export default function Signup() {
       showConfirmButton: false,
       timer: 1000,
     });
+    navigate("/");
   }
 
   if (isError && error) {

@@ -72,8 +72,6 @@ export default function ReadList() {
     return <Loading />;
   }
 
-  console.log(data);
-
   return (
     <div>
       {data?.data?.email !== user?.email ? (

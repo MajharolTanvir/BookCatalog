@@ -70,7 +70,6 @@ export default function AddReview() {
     };
 
     void addReview(option);
-    console.log(option)
 
     reset();
   };
