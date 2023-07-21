@@ -8,6 +8,7 @@ export interface IUserState {
     lastName: string | null;
     email: string | null;
   };
+  isLoading?: boolean
 }
 
 const initialState: IUserState = {

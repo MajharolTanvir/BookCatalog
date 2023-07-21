@@ -25,10 +25,11 @@ import {
 import { useEffect, useState } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import ReadList from "./ReadList";
+import { IUserState } from "../redux/features/auth/userSlice";
 
 export default function BookDetails() {
   const { id } = useParams();
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state: { user: IUserState; }) => state.user);
   const [errorMessage, setErrorMessage] = useState("");
 
   type CustomError = FetchBaseQueryError & {

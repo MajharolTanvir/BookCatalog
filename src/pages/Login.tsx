@@ -58,7 +58,6 @@ export default function Login() {
       dispatch(
         setUser({ firstName: firstName, lastName: lastName, email: email })
       );
-      navigate("/");
     }
   }, [data, dispatch, isSuccess, navigate]);
 

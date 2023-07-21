@@ -4,17 +4,21 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/book.png'
 import { useAppDispatch, useAppSelector } from '../redux/hook';
 import { setUser } from "../redux/features/auth/userSlice";
+import Loading from '../components/Loading';
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
 
-  const { user }  = useAppSelector((state) => state?.user);
+  const { user, isLoading }  = useAppSelector((state) => state?.user);
 
   const handleLogout = () => {
       localStorage.removeItem("user");
       dispatch(setUser({ firstName: null, lastName: null, email: null }));
   };
   
+  if (isLoading) {
+    return <Loading/>
+  }
 
   return (
     <div className="bg-slate-800 text-white">
