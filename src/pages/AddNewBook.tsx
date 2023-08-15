@@ -17,6 +17,7 @@ interface IAddBook {
   genre: string;
   publicationDate: string;
   addedBy?: string | null;
+  year: number;
 }
 type CustomError = FetchBaseQueryError & {
   data: {
@@ -28,14 +29,14 @@ type CustomError = FetchBaseQueryError & {
 
 export default function AddNewBook() {
   const [errorMessage, setErrorMessage] = useState("");
-    const [addBook, { isLoading, isError, isSuccess, error, data }] =
-      useAddBookMutation();
+  const [addBook, { isLoading, isError, isSuccess, error, data }] =
+    useAddBookMutation();
   const { user } = useAppSelector((state) => state?.user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { register, handleSubmit, reset } = useForm<IAddBook>();
 
-	useEffect(() => {
+  useEffect(() => {
     if (isError && error) {
       const customError = error as CustomError;
       if (customError.data) {
@@ -52,7 +53,7 @@ export default function AddNewBook() {
       showConfirmButton: false,
       timer: 1000,
     });
-    navigate('/books')
+    navigate("/books");
   }
 
   if (isError && error) {
@@ -64,18 +65,19 @@ export default function AddNewBook() {
     });
   }
 
-
-    const onSubmit: SubmitHandler<IAddBook> = (data) => {
-      const option: IAddBook = {
-        title: data?.title,
-        author: data?.author,
-        genre: data?.genre,
-        publicationDate: data?.publicationDate,
-        addedBy: user.email,
-      };
-      void addBook(option);
-      reset();
+  const onSubmit: SubmitHandler<IAddBook> = (data) => {
+    
+    const option: IAddBook = {
+      title: data?.title,
+      author: data?.author,
+      genre: data?.genre,
+      publicationDate: data?.publicationDate,
+      year: new Date(data.publicationDate).getFullYear(),
+      addedBy: user.email,
     };
+    void addBook(option);
+    reset();
+  };
 
   if (isLoading) {
     return <Loading />;

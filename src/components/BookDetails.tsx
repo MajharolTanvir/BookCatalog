@@ -144,7 +144,7 @@ export default function BookDetails() {
               {wishlist?.data?.email === user.email && (
                 <Link to={`/wishlists`}>
                   <div className="tooltip" data-tip="View WishList">
-                    <button className="btn bg-cyan-600 hover:bg-cyan-400 text-white hover:text-slate-800 text-xl">
+                    <button className="btn text-cyan-600 bg-white  hover:text-slate-800 text-xl">
                       <BsEyeFill />
                     </button>
                   </div>

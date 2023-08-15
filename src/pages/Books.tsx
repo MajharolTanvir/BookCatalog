@@ -4,21 +4,46 @@
 import { ChangeEvent, useState } from "react";
 import BookCard from "../components/BookCard";
 import Loading from "../components/Loading";
-import { useGetAllBooksQuery, useGetSearchBookQuery } from "../redux/features/bookSlice.ts/BookApi";
+import {
+  useGetAllBooksQuery,
+  useGetFilterBookQuery,
+  useGetSearchBookQuery,
+} from "../redux/features/bookSlice.ts/BookApi";
 import { IBook } from "../Types/GlobalTypes";
 
 export default function Books() {
-      const [searchText, setSearchText] = useState("");
+  let bookData = null;
+  const [searchText, setSearchText] = useState("");
+  const [selectGenre, setSelectGenre] = useState("");
+  const [selectYear, setSelectYear] = useState("");
   const { data, isLoading } = useGetAllBooksQuery(undefined);
-    const { data: searchData, isLoading: searchLoading } = useGetSearchBookQuery(
-      `searchTerm=${searchText}`
-    );
-  
-    const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-      setSearchText(e.target.value);
-    };
+  const { data: searchData, isLoading: searchLoading } = useGetSearchBookQuery(
+    `searchTerm=${searchText}`
+  );
 
-  if (isLoading || searchLoading) {
+  const { data: filterData, isLoading: filterLoading } = useGetFilterBookQuery(
+    `genre=${selectGenre}&year=${selectYear}`
+  );
+
+  bookData = searchData;
+
+  if (selectGenre && selectYear) {
+    bookData = filterData;
+  }
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleYear = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectYear(e.target.value);
+  };
+
+  const handleGenre = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectGenre(e.target.value);
+  };
+
+  if (isLoading || searchLoading || filterLoading) {
     return <Loading />;
   }
 
@@ -34,28 +59,37 @@ export default function Books() {
                 onChange={handleSearch}
               />
             </div>
-            <select className="select border border-cyan-500 join-item">
+            <select
+              onChange={handleGenre}
+              className="select border border-cyan-500 join-item"
+            >
               <option className="my-2" disabled selected>
-                Category
+                All Genre
               </option>
-              <option className="my-2">Genre</option>
-              <option>Publication year</option>
+              {data?.data?.map((book: IBook) => (
+                <option className="my-2">{book.genre}</option>
+              ))}
+            </select>
+            <select
+              onChange={handleYear}
+              className="select border border-cyan-500 join-item"
+            >
+              <option className="my-2" disabled selected>
+                All Year
+              </option>
+              {data?.data?.map((book: IBook) => (
+                <option className="my-2">{book.year}</option>
+              ))}
             </select>
           </div>
         </div>
       </div>
-      {searchData?.data ? 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-5 mx-auto">
-          {searchData?.data?.map((book: IBook) => (
-            <BookCard book={book} key={book.id} />
-          ))}
-        </div> : 
+
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 py-5 mx-auto">
-        {data?.data?.map((book: IBook) => (
+        {bookData?.data?.map((book: IBook) => (
           <BookCard book={book} key={book.id} />
         ))}
       </div>
-      }
     </div>
   );
 }

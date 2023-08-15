@@ -7,6 +7,7 @@ export interface IBook {
   genre: string;
   publicationDate: string;
   addedBy: string;
+  year: number
 }
 
 

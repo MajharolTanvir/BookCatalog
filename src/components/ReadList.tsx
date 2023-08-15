@@ -88,7 +88,7 @@ export default function ReadList() {
       ) : (
         <Link to="/readlists">
           <div className="tooltip" data-tip="View Read List">
-            <button className="btn bg-cyan-600 hover:bg-cyan-400 text-white hover:text-slate-800 text-xl">
+            <button className="btn text-cyan-600 bg-white hover:text-slate-800 text-xl">
               <BsEyeFill />
             </button>
           </div>
