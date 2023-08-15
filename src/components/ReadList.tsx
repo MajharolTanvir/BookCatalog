@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BiSolidBookAdd } from "react-icons/bi";
 import {
   useAddReadListMutation,
@@ -14,8 +14,11 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import Swal from "sweetalert2";
 import { BsEyeFill } from "react-icons/bs";
 
-export default function ReadList() {
-  const { id } = useParams();
+interface ReadListProps {
+  id: string;
+}
+
+export default function ReadList({ id }: ReadListProps) {
   const { user } = useAppSelector((state) => state.user);
   const [errorMessage, setErrorMessage] = useState("");
   type CustomError = FetchBaseQueryError & {
@@ -60,9 +63,17 @@ export default function ReadList() {
   }
 
   if (isError && error) {
+    if (errorMessage === "ValidationError") {
+      void Swal.fire({
+        title: "Failed!",
+        text: "Login now",
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
+    }
     void Swal.fire({
       title: "Failed!",
-      text: errorMessage,
+      text: "Please Login",
       icon: "error",
       confirmButtonText: "Try Again",
     });
@@ -74,7 +85,7 @@ export default function ReadList() {
 
   return (
     <div>
-      {data?.data?.email !== user?.email ? (
+      {!data.data ? (
         <div>
           <div className="tooltip" data-tip="Add reading book">
             <button
